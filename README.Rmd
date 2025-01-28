@@ -1,0 +1,97 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# psp
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of psp is to ...
+
+## Installation
+
+You can install the development version of psp from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("FoodchainStats/psp")
+```
+
+## Example
+
+For now just storing this SUT code
+
+```{r example}
+
+products <- c("CPA_A01", "CPA_A03", "CPA_C101", "CPA_C102_3",
+              "CPA_C104", "CPA_C105", "CPA_C106", "CPA_C107",
+              "CPA_C108", "CPA_C109")
+
+industries <- c("A01", "A03", "C104", "C106", "C101", "C102_3", "C105", "C109", "C107", "C108")
+
+sut <- system.file("extdata/sut.xlsx", package = "psp")
+
+# We calculate total intermediate consumption at purchasers prices as a
+# proportion of total domestic output of products
+cells <- tidyxl::xlsx_cells(sut, sheets = c("Table 1 - Supply 2022"))
+
+domestic_output <- psp::get_sut(cells) |> 
+  dplyr::filter(code %in% products, category == "Total domestic output of products at basic prices") |> 
+  dplyr::mutate(code = stringr::str_remove(code, "CPA_")) |> 
+  dplyr::select(category, code, product, tot_domestic_output = value)
+
+
+
+cells <- tidyxl::xlsx_cells(sut, sheets = c("Table 2 - Int Con 2022"))
+
+intcon <- psp::get_sut(cells) |> 
+  dplyr::filter(sic %in% industries, code %in% products) |> 
+  dplyr::select(sic, industry, code, product, intcon_pp = value)
+
+intcon_purchasers_prices <- intcon |> 
+  dplyr::group_by(sic) |> 
+  dplyr::summarise(tot_intcon_pp = sum(intcon_pp))
+
+
+intcon_factors <- domestic_output |> 
+  dplyr::left_join(intcon_purchasers_prices, by = dplyr::join_by(code == sic)) |> 
+  dplyr::mutate(intcon_pp_factor = dplyr::case_when(code == "A01" ~ 1,
+                                                    code == "A03" ~ 1,
+                                                    .default = tot_intcon_pp/tot_domestic_output))
+
+
+
+intcon_farmgate_prices <- intcon |> 
+  dplyr::left_join(intcon_factors,by = dplyr::join_by(sic == code)) |> 
+  dplyr::mutate(intcon_fp = intcon_pp * intcon_pp_factor) |> 
+  dplyr::group_by(sic) |> 
+  dplyr::summarise(tot_intcon_fp = sum(intcon_fp))
+
+
+factors <- intcon_farmgate_prices |> 
+  dplyr::left_join(domestic_output, by = dplyr::join_by(sic == code)) |> 
+  dplyr::mutate(factor = tot_intcon_fp/tot_domestic_output)
+
+factors |> 
+  dplyr::mutate(dop = dplyr::case_when(sic %in% c("A01", "A03") ~ "Unprocessed",
+                                       sic %in% c("C101", "C102_3", "C104", "C105", "C106", "C109") ~ "Lightly processed",
+                                       sic %in% c("C107", "C108", "C109") ~ "Highly processed")) |> 
+  dplyr::group_by(dop) |> 
+  dplyr::summarise(final_factor = sum(tot_intcon_fp)/sum(tot_domestic_output)) |> 
+  knitr::kable()
+
+
+```
+
