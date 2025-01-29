@@ -81,7 +81,21 @@ get_sut <- function(cells){
 }
 
 
+verify_sut <- function(cells) {
 
+  is_sut <- TRUE
+
+  cols <- c("sheet", "address", "row", "col")
+
+  if(!identical(colnames(cells)[1:4], cols)) {
+    is_sut <- FALSE
+    message("not a sut spreadsheet")
+    stop()
+    }
+
+
+  return(is_sut)
+}
 
 
 
