@@ -7,7 +7,7 @@
 sut_tableno(cells)
 }
 \arguments{
-\item{cells}{}
+\item{cells}{a tidyxl::xlsx_cells output}
 }
 \description{
 Title

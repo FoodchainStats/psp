@@ -7,7 +7,7 @@
 url_sut()
 }
 \value{
-The lo cation of ONS Supply and Use tables
+The location of ONS Supply and Use tables
 }
 \description{
 URL for Supply and Use tables

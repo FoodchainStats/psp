@@ -12,7 +12,4 @@ What the package does (one paragraph).
 \strong{Maintainer}: First Last \email{first.last@example.com}
 
 }
-\keyword{.data}
-\keyword{importFrom}
 \keyword{internal}
-\keyword{rlang}

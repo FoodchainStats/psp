@@ -41,6 +41,12 @@ products <- c("CPA_A01", "CPA_A03", "CPA_C101", "CPA_C102_3",
 
 industries <- c("A01", "A03", "C104", "C106", "C101", "C102_3", "C105", "C109", "C107", "C108")
 
+# Or alternatively
+# url <- "https://www.ons.gov.uk/file?uri=/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables/current/supublicationtablesbb24.xlsx"
+# sut <- system.file("extdata/sut.xlsx", package = "psp")
+# sut <- tempfile()
+# download.file(url, sut)
+
 sut <- system.file("extdata/sut.xlsx", package = "psp")
 
 # We calculate total intermediate consumption at purchasers prices as a

@@ -1,7 +1,7 @@
 
 #' Title
 #'
-#' @param cells
+#' @param cells a tidyxl::xlsx_cells output
 #'
 #' @returns
 #' @export
@@ -39,7 +39,7 @@ return(out)
 
 #' Title
 #'
-#' @param cells
+#' @param cells a tidyxl::xlsx_cells output
 #'
 #' @returns
 #' @export
@@ -56,11 +56,11 @@ get_sut <- function(cells){
       unpivotr::behead("up", "category") |>
       unpivotr::behead("left", "code") |>
       unpivotr::behead("left", "product") |>
-      dplyr::select(category, code, product, value = numeric) |>
-      dplyr::mutate(category = stringr::str_replace_all(category, " \\r\\n(?=[a-zA-z])", " ")) |>
-      dplyr::mutate(category = stringr::str_replace_all(category, "\\r\\n", " ")) |>
-      dplyr::mutate(category = stringr::str_replace_all(category, "'", "")) |>
-      dplyr::mutate(product = stringr::str_trim(product))
+      dplyr::select("category", "code", "product", value = "numeric") |>
+      dplyr::mutate(category = stringr::str_replace_all(.data$category, " \\r\\n(?=[a-zA-z])", " ")) |>
+      dplyr::mutate(category = stringr::str_replace_all(.data$category, "\\r\\n", " ")) |>
+      dplyr::mutate(category = stringr::str_replace_all(.data$category, "'", "")) |>
+      dplyr::mutate(product = stringr::str_trim(.data$product))
 
     return(out)
   }
@@ -72,8 +72,8 @@ get_sut <- function(cells){
       unpivotr::behead("up", "industry") |>
       unpivotr::behead("left", "code") |>
       unpivotr::behead("left", "product") |>
-      dplyr::select(sic, industry, code, product, value = numeric) |>
-      dplyr::mutate(product = stringr::str_trim(product))
+      dplyr::select("sic", "industry", "code", "product", value = "numeric") |>
+      dplyr::mutate(product = stringr::str_trim(.data$product))
 
     return(out)
   }

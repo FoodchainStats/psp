@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @param cells
+#' @param cells a tidyxl::xlsx_cells output
 #'
 #' @returns
 #' @export
@@ -14,7 +14,7 @@ get_accounts <- function(cells) {
     unpivotr::behead("up", "year") |>
     unpivotr::behead("left", "id") |>
     unpivotr::behead("left", "item") |>
-    dplyr::select(.data$year, .data$id, .data$item, value = numeric)
+    dplyr::select("year", "id", "item", value = "numeric")
 
   return(out)
 
