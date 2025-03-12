@@ -42,7 +42,7 @@ sut <- system.file("extdata/sut.xlsx", package = "psp")
 # proportion of total domestic output of products
 cells <- tidyxl::xlsx_cells(sut, sheets = c("Table 1 - Supply 2022"))
 
-domestic_output <- psp::get_sut(cells) |> 
+domestic_output <- psp::read_sut(cells) |> 
   dplyr::filter(code %in% products, category == "Total domestic output of products at basic prices") |> 
   dplyr::mutate(code = stringr::str_remove(code, "CPA_")) |> 
   dplyr::select(category, code, product, tot_domestic_output = value)
@@ -51,7 +51,7 @@ domestic_output <- psp::get_sut(cells) |>
 
 cells <- tidyxl::xlsx_cells(sut, sheets = c("Table 2 - Int Con 2022"))
 
-intcon <- psp::get_sut(cells) |> 
+intcon <- psp::read_sut(cells) |> 
   dplyr::filter(sic %in% industries, code %in% products) |> 
   dplyr::select(sic, industry, code, product, intcon_pp = value)
 

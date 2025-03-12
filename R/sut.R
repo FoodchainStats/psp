@@ -45,7 +45,7 @@ return(out)
 #' @export
 #'
 #' @examples
-get_sut <- function(cells){
+read_sut <- function(cells){
 
   t_no <- sut_tableno(cells)
 

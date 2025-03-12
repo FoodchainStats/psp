@@ -2,7 +2,7 @@
 
 export(acquire_sut)
 export(get_accounts)
-export(get_sut)
+export(read_sut)
 export(sut_tableno)
 export(url_sut)
 importFrom(rlang,.data)
