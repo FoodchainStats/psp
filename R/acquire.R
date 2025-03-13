@@ -11,7 +11,8 @@ acquire_sut <- function(path){
 
   if (!missing(path)) {
     if (!dir.exists(path))
-      stop(paste(path, "does not exist"))
+      cli::cli_abort(message = "Path {.arg {path}} does not exist.")
+      # stop(paste(path, "does not exist"))
   }
 
   url <- url_sut()
@@ -24,6 +25,7 @@ acquire_sut <- function(path){
     utils::download.file(url, destfile = paste0(path, "/",
                                                 "sut.xlsx"))
     sutfile <- paste0(path, "/", "sut.xlsx")
+    message(sutfile)
   }
 
   return(sutfile)
