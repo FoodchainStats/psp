@@ -2,13 +2,27 @@
 % Please edit documentation in R/sut.R
 \name{read_sut}
 \alias{read_sut}
-\title{Title}
+\title{Read a supply use table}
 \usage{
 read_sut(cells)
 }
 \arguments{
 \item{cells}{a tidyxl::xlsx_cells output}
 }
+\value{
+a dataframe in tidy format
+}
 \description{
-Title
+Extract a SUT from a tidyxl::xlsx_cells output
+}
+\examples{
+\dontrun{
+sut <- acquire_sut()
+
+x |>
+  tidyxl::xlsx_cells(sut) |>
+  dplyr::filter(sheet == "Table 1 - Supply 2017") |>
+  read_sut()
+
+}
 }

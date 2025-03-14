@@ -2,13 +2,28 @@
 % Please edit documentation in R/acquire.R
 \name{acquire_sut}
 \alias{acquire_sut}
-\title{Title}
+\title{Download an ONS supply use spreadsheet}
 \usage{
 acquire_sut(path)
 }
 \arguments{
-\item{path}{Path to a supply and use spreadsheet}
+\item{path}{Path to a folder store a supply and use spreadsheet. Downloaded
+file will be named 'sut.xlsx'.If not specified a tempfile will be used.}
+}
+\value{
+A file location
 }
 \description{
-Title
+Retrieves a supply and use table from the ONS (see \code{\link[=url_sut]{url_sut()}}) and stores it
+in the specified folder, or tempfile if not specified.
+}
+\examples{
+\dontrun{
+
+sut <- acquire_sut()
+
+# or specify a folder
+sut <- acquire_sut("~/downloads")
+
+}
 }

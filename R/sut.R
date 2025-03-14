@@ -1,12 +1,24 @@
 
-#' Title
+#' Identify a supply use table
+#'
+#' Given a dataframe derived from a SUT spreadsheet, identify which type of SUT
+#' it is.
 #'
 #' @param cells a tidyxl::xlsx_cells output
 #'
-#' @returns
+#' @returns a value identifying the type of table
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' sut <- acquire_sut()
+#'
+#' x |>
+#'   tidyxl::xlsx_cells(sut) |>
+#'   dplyr::filter(sheet == "Table 1 - Supply 2017") |>
+#'   sut_tabletype()
+#'
+#' }
 sut_tabletype <- function(cells) {
 
   # if(verify_sut(cells) == FALSE) {
@@ -46,14 +58,25 @@ sut_tabletype <- function(cells) {
 }
 
 
-#' Title
+#' Read a supply use table
+#'
+#' Extract a SUT from a tidyxl::xlsx_cells output
 #'
 #' @param cells a tidyxl::xlsx_cells output
 #'
-#' @returns
+#' @returns a dataframe in tidy format
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' sut <- acquire_sut()
+#'
+#' x |>
+#'   tidyxl::xlsx_cells(sut) |>
+#'   dplyr::filter(sheet == "Table 1 - Supply 2017") |>
+#'   read_sut()
+#'
+#' }
 read_sut <- function(cells){
 
 

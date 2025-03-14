@@ -41,17 +41,14 @@ products <- c("CPA_A01", "CPA_A03", "CPA_C101", "CPA_C102_3",
 
 industries <- c("A01", "A03", "C104", "C106", "C101", "C102_3", "C105", "C109", "C107", "C108")
 
-# Or alternatively
-# url <- "https://www.ons.gov.uk/file?uri=/economy/nationalaccounts/supplyandusetables/datasets/inputoutputsupplyandusetables/current/supublicationtablesbb24.xlsx"
-# sut <- system.file("extdata/sut.xlsx", package = "psp")
-# sut <- tempfile()
-# download.file(url, sut)
-
-sut <- system.file("extdata/sut.xlsx", package = "psp")
+sut <- psp::acquire_sut() |> 
+  tidyxl::xlsx_cells()
 
 # We calculate total intermediate consumption at purchasers prices as a
 # proportion of total domestic output of products
-cells <- tidyxl::xlsx_cells(sut, sheets = c("Table 1 - Supply 2022"))
+
+cells <- sut |> 
+  dplyr::filter(sheet == "Table 1 - Supply 2022")
 
 domestic_output <- psp::read_sut(cells) |> 
   dplyr::filter(code %in% products, category == "Total domestic output of products at basic prices") |> 
@@ -59,8 +56,8 @@ domestic_output <- psp::read_sut(cells) |>
   dplyr::select(category, code, product, tot_domestic_output = value)
 
 
-
-cells <- tidyxl::xlsx_cells(sut, sheets = c("Table 2 - Int Con 2022"))
+cells <- sut |> 
+  dplyr::filter(sheet == "Table 2 - Int Con 2022")
 
 intcon <- psp::read_sut(cells) |> 
   dplyr::filter(sic %in% industries, code %in% products) |> 

@@ -1,12 +1,23 @@
-#' Title
+#' Download an ONS supply use spreadsheet
 #'
+#' Retrieves a supply and use table from the ONS (see [url_sut()]) and stores it
+#' in the specified folder, or tempfile if not specified.
 #'
-#' @param path Path to a supply and use spreadsheet
+#' @param path Path to a folder store a supply and use spreadsheet. Downloaded
+#'   file will be named 'sut.xlsx'.If not specified a tempfile will be used.
 #'
-#' @returns
+#' @returns A file location
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#'
+#' sut <- acquire_sut()
+#'
+#' # or specify a folder
+#' sut <- acquire_sut("~/downloads")
+#'
+#' }
 acquire_sut <- function(path){
 
   if (!missing(path)) {

@@ -13,5 +13,7 @@ The location of ONS Supply and Use tables
 URL for Supply and Use tables
 }
 \examples{
+\dontrun{
 url <- url_sut()
+}
 }

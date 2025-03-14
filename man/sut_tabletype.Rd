@@ -2,13 +2,28 @@
 % Please edit documentation in R/sut.R
 \name{sut_tabletype}
 \alias{sut_tabletype}
-\title{Title}
+\title{Identify a supply use table}
 \usage{
 sut_tabletype(cells)
 }
 \arguments{
 \item{cells}{a tidyxl::xlsx_cells output}
 }
+\value{
+a value identifying the type of table
+}
 \description{
-Title
+Given a dataframe derived from a SUT spreadsheet, identify which type of SUT
+it is.
+}
+\examples{
+\dontrun{
+sut <- acquire_sut()
+
+x |>
+  tidyxl::xlsx_cells(sut) |>
+  dplyr::filter(sheet == "Table 1 - Supply 2017") |>
+  sut_tabletype()
+
+}
 }
