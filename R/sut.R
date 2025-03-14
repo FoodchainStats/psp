@@ -80,7 +80,7 @@ sut_tabletype <- function(cells) {
 read_sut <- function(cells){
 
 
-  check_sut(cells)
+  check_tidyxl(cells)
 
   t_no <- sut_tabletype(cells)
 
@@ -174,7 +174,7 @@ read_sut <- function(cells){
   }
 
   if(t_no == "fail") {
-  cli::cli_abort(message = "{.arg cells} does not appear to be a supply and use table")
+    cli::cli_abort(message = "{.arg cells} does not appear to be a supply and use table")
   }
 
 }
@@ -194,7 +194,7 @@ verify_sut <- function(cells) {
 }
 
 
-check_sut <- function(cells, arg = rlang::caller_arg(cells), call = rlang::caller_env()) {
+check_tidyxl <- function(cells, arg = rlang::caller_arg(cells), call = rlang::caller_env()) {
   # is_sut <- TRUE
   cols <- c("sheet", "address", "row", "col")
   if(!identical(colnames(cells)[1:4], cols)) {
