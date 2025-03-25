@@ -17,6 +17,9 @@ Extract data from a tidyxl::xlsx_cells output
 }
 \examples{
 \dontrun{
-read_accounts(cells)
+ac <- system.file("extdata/accounts.xlsx", package = "psp") |>
+tidyxl::xlsx_cells()
+
+read_accounts(ac)
 }
 }

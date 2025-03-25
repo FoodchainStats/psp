@@ -15,3 +15,6 @@ Imports:
     rvest,
     stringr,
     unpivotr
+Depends: 
+    R (>= 3.5)
+LazyData: true
